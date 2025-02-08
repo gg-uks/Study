@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group = 'org.example'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {//의존성 API주입
+    //ServletAPI,JSTL라이브러리
+
+    // https://mvnrepository.com/artifact/javax.servlet/javax.servlet-api  배포할때는 필요없음  로컬에서 톰켓으로 돌리기위해 사용
+    compileOnly 'javax.servlet:javax.servlet-api:4.0.1'
+
+    // https://mvnrepository.com/artifact/javax.servlet/jstl
+    implementation group: 'javax.servlet', name: 'jstl', version: '1.2'
+
+    //My SQL JDBC Driver
+    // https://mvnrepository.com/artifact/mysql/mysql-connector-java
+    implementation group: 'mysql', name: 'mysql-connector-java', version: '8.0.28'
+
+    //Lombok API
+    implementation 'org.projectlombok:lombok:1.18.24'
+    annotationProcessor 'org.projectlombok:lombok:1.18.24'
+
+    // MyBatis 웹사이트
+    //https://mybatis.org/mybatis-3/getting-started.html
+    //My Batis Framework(방법론)API
+    implementation 'org.mybatis:mybatis:3.5.6'
+
+    testImplementation(platform("org.junit:junit-bom:5.10.0"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+}
+
+test {
+    useJUnitPlatform()
+}

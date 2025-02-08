@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="mybatis-config/db.properties"/>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"/>
+            <dataSource type="POOLED">
+                <property name="driver" value="${driver}"/>
+                <property name="url" value="${url}"/>
+                <property name="username" value="${username}"/>
+                <property name="password" value="${password}"/>
+
+                <!-- 연결 풀 설정
+                커넥션풀은 데이터베이스의 성능을 개선하기위해 커넥션을 미리 서버에다가 만들어 필요할때마다 커넥션을 꺼내와서 사용하고 반납한다
+                리유저블을 좋게해서 데이터베이스의 성능을 개선시키는것이다.-->
+
+<!--                Connection(Sqlsession) : 10개,5개 20초 ,20초동안 기다림 10개의 커넥션 유효커넥션5개 체크아웃20초 연결대기 20초-->
+<!--                <property name="poolMaximumActiveConnections" value="10"/>-->
+<!--                <property name="poolMaximumIdleConnections" value="5"/>-->
+<!--                <property name="poolMaximumCheckoutTime" value="20000"/>-->
+<!--                <property name="poolTimeToWait" value="20000"/>-->
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <mapper resource="mybatis-config/mapper/BookMapper.xml"/>
+    </mappers>
+</configuration>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+
+         version="3.1">
+
+<!--    <servlet>-->
+<!--        <servlet-name>HelloServlet</servlet-name> &lt;!&ndash;클래스 이름은 임의적으로 해도되지만 패키지에있는 클래스 명으로 맞춰준다 &ndash;&gt;-->
+<!--        <servlet-class>com.controller.com.example.HelloServlet</servlet-class>&lt;!&ndash;어떤 포조 컨트롤러를 찾아 가는지 매핑시켜줌 &ndash;&gt;-->
+<!--    </servlet>-->
+
+<!--    <servlet-mapping>-->
+<!--        <servlet-name>HelloServlet</servlet-name> &lt;!&ndash;클래스 이름은 임의적으로 해도되지만 패키지에있는 클래스 명으로 맞춰준다 &ndash;&gt;-->
+<!--        <url-pattern>/hello</url-pattern>&lt;!&ndash;컨텍스트 패스 다음에 오는 url패턴을 /hello로 하면 서블릿 네임이 매핑된곳으로 간다  &ndash;&gt;-->
+<!--                                        &lt;!&ndash;주의 할점은 요렇게 web.xml에 등록을 하면 해당 포조 컨트롤러에 @WebServlet라고 되있는 url패턴을 막아줘야 에러가 안생긴다 .&ndash;&gt;-->
+
+<!--    </servlet-mapping>-->
+
+
+
+
+</web-app>
