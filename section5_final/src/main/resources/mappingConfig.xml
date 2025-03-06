@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<commands>
+    <command key="/list.do" value="com.example.controller.BookListController"></command>
+    <command key="/delete.do" value="com.example.controller.BookDeleteController"></command>
+    <command key="/registerGet.do" value="com.example.controller.BookRegisterGetController"></command>
+    <command key="/registerPost.do" value="com.example.controller.BookRegisterPostController"></command>
+    <command key="/updateGet.do" value="com.example.controller.BookUpdateGetController"></command>
+    <command key="/updatePost.do" value="com.example.controller.BookUpdatePostController"></command>
+    <command key="/view.do" value="com.example.controller.BookViewController"></command>
+    <command key="/imageGet.do" value="com.example.controller.BookImageGetController"></command>
+    <command key="/upload.do" value="com.example.controller.UploadController"></command>
+    <command key="/download.do" value="com.example.controller.DownloadController"></command>
+    <command key="/imageDelete.do" value="com.example.controller.DeleteController"></command>
+</commands>
+
+
+
+
+

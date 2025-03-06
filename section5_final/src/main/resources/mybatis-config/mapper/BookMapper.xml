@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.BookDAO">
+
+     <!--<select id="bookList" resultType="com.example.entity.BookDTO">
+         select * from book order by title asc
+     </select>-->
+
+    <select id="bookList" resultType="com.example.entity.BookImageDTO">
+        SELECT * FROM book b
+        LEFT JOIN (select * from bookimage where type=1) bi
+        ON b.num = bi.book_num
+    </select>
+
+    <delete id="bookDelete">
+        delete from book where num=#{num}
+    </delete>
+
+    <insert id="bookInsert" parameterType="com.example.entity.BookDTO">
+        insert into book(title, price, author, page)
+        values(#{title},#{price},#{author},#{page})
+    </insert>
+
+    <select id="bookView" resultType="com.example.entity.BookImageDTO">
+        select * from book b
+        LEFT JOIN(select * from bookimage where type=3) bi
+        ON b.num=bi.book_num
+        where b.num=#{num}
+    </select>
+
+    <update id="bookUpdate" parameterType="com.example.entity.BookDTO">
+        update book set
+        title=#{title},
+        price=#{price},
+        author=#{author},
+        page=#{page}
+        where num=#{num}
+    </update>
+
+    <select id="imageList" resultType="com.example.entity.ImageDTO">
+        select * from bookImage where book_num=#{num}
+    </select>
+
+    <insert id="saveImage" parameterType="com.example.entity.ImageDTO">
+        INSERT INTO bookimage(book_num,type,path)
+        VALUES (#{book_num},#{type},#{path})
+    </insert>
+
+    <select id="getImagePathById" resultType="com.example.entity.ImageDTO">
+        select * from bookimage where id = #{id}
+    </select>
+
+    <delete id="deleteImageById">
+        delete from bookimage where id=#{id}
+    </delete>
+
+    <select id="getImages" resultType="com.example.entity.ImageDTO">
+        select * from bookimage where book_num=#{book_num} and type=2
+    </select>
+</mapper>
