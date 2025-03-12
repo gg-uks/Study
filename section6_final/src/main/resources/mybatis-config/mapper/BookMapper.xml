@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.BookDAOMyBatis">
+
+     <select id="bookList" resultType="com.example.entity.BookDTO"
+                           parameterType="com.example.entity.Criteria">
+         select * from book limit #{pageStart},#{perPageNum}
+     </select>
+
+    <delete id="bookDelete">
+        delete from book where num=#{num}
+    </delete>
+
+    <insert id="bookInsert" parameterType="com.example.entity.BookDTO">
+        insert into book(title, price, author, page)
+        values(#{title},#{price},#{author},#{page})
+    </insert>
+
+    <select id="bookView" resultType="com.example.entity.BookDTO">
+        select * from book where num=#{num}
+    </select>
+
+    <update id="bookUpdate" parameterType="com.example.entity.BookDTO">
+        update book set
+        title=#{title},
+        price=#{price},
+        author=#{author},
+        page=#{page}
+        where num=#{num}
+    </update>
+
+    <select id="totalCount" resultType="int">
+        select count(*) from book
+    </select>
+
+    <insert id="addToCart" parameterType="com.example.entity.CartDTO">
+        insert into cart(customer_id, book_num, quantity)
+        values(#{customer_id},#{book_num},#{quantity})
+    </insert>
+
+    <select id="cartBookList" parameterType="String" resultType="com.example.entity.CartBookDTO">
+        SELECT c.cart_number,c.customer_id,c.book_num,c.quantity,c.cart_date,
+        b.num,b.title,b.price,b.author,b.page
+        FROM cart c
+        JOIN book b ON c.book_num = b.num
+        WHERE c.customer_id = #{customer_id}
+    </select>
+
+    <delete id="removeCart">
+<!--     DAO에서 전달된 파라미터로 맞춰줘야 한다  #{cartNumber} -->
+        delete from cart where cart_number = #{cartNumber}
+    </delete>
+
+    <update id="quantityUpdate" parameterType="java.util.Map">
+        update cart
+        set quantity=#{quantity}
+        where cart_number=#{cartNumber}
+        <!--카트고유번호에 따른 개수 업데이트 -->
+    </update>
+
+    <delete id="clearCart" parameterType="com.example.entity.CustomerDTO">
+        delete from cart where customer_id=#{customer_id}
+    </delete>
+
+</mapper>

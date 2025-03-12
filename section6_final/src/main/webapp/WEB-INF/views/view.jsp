@@ -1,0 +1,164 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java"
+pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<c:set var="cpath" value="${pageContext.request.contextPath}"/>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  </head>
+<body>
+
+<div class="container">
+      <h2>Web MVC Framework Basic</h2>
+      <div class="card">
+        <div class="card-header">Book View</div>
+        <div class="card-body">
+            <table class="table table-bordered">
+               <tr>
+                  <td>번호</td>
+                  <td>${book.num}</td>
+               </tr>
+             <tr>
+                  <td>제목</td>
+                  <td>${book.title}</td>
+               </tr>
+             <tr>
+                  <td>가격</td>
+                  <td>${book.price}</td>
+               </tr>
+             <tr>
+                  <td>저자</td>
+                  <td>${book.author}</td>
+               </tr>
+             <tr>
+                  <td>페이지수</td>
+                  <td>${book.page}</td>
+               </tr>
+            </table>
+            <!-- 총액,  수량,  장바구니 담기 -->
+                <div class="row mb-3">
+                   <div class="col-8 text-right">
+                     <!-- 수량 선택을 위한 스텝퍼와 총액 표시를 우측 정렬 -->
+                     <div class="d-inline-block mr-3">
+                       <label for="quantityInput" class="mr-2">수량:</label>
+                       <input type="number" id="quantityInput" value="1" min="1" class="form-control d-inline-block" style="width: auto;">
+                     </div>
+                     총액:<span id="totalPrice" class="d-inline-block">${book.price}</span> <!-- 예시로 book.price를 사용하였으나, 실제 총액 계산 로직 필요 -->
+                   </div>
+                   <div class="col-4">
+                     <!-- 장바구니에 담기 버튼의 넓이를 100%로 설정하고 색상을 빨간색으로 변경 -->
+                     <c:if test="${!empty cus}">
+                        <button class="btn btn-danger btn-sm w-100" id="addToCart">장바구니에 담기</button>
+                     </c:if>
+                     <c:if test="${empty cus}">
+                        <button class="btn btn-danger btn-sm w-100" id="addToCart" disabled>장바구니에 담기</button>
+                     </c:if>
+                   </div>
+                 </div>
+                <button class="btn btn-sm btn-primary action">목록</button>
+            <c:if test="${!empty cus}">
+                <button class="btn btn-sm btn-success action">수정</button>
+                <button class="btn btn-sm btn-warning action">삭제</button>
+            </c:if>
+            <c:if test="${empty cus}">
+                <button class="btn btn-sm btn-success action" disabled>수정</button>
+                <button class="btn btn-sm btn-warning action" disabled>삭제</button>
+            </c:if>
+        </div>
+
+       <div class="card-footer">스프링연습 김남국</div>
+   </div>
+   </div>
+    <form id="myForm" method="post" action="">
+         <input type="hidden" name="num" id="num" value="${book.num}"/>
+         <input type="hidden" name="page" id="page" value="${page}"/>
+    </form>
+ <script>
+       document.querySelector(".card-body").addEventListener("click", function(e){
+         if(e.target.classList.contains("action")){
+              let form=document.getElementById("myForm");
+              let inputNum=document.getElementById("num");
+              switch(e.target.classList[2]){
+                  case "btn-primary" :
+                       console.log("목록버튼클릭");
+                       form.action="${cpath}/list.do"
+                       if(inputNum){
+                           inputNum.remove();
+                       }
+                       form.method="GET";
+                       break;
+                  case "btn-success" :
+                      console.log("수정버튼클릭");
+                      form.action="${cpath}/updateGet.do"
+                      form.method="POST";
+                      break;
+                  case "btn-warning" :
+                       console.log("삭제버튼클릭");
+                       form.action="${cpath}/delete.do"
+                       form.method="POST";
+                       break;
+              }
+              form.submit();
+         }
+       });
+
+     document.getElementById("quantityInput").addEventListener("change",function(){
+        let quantity = this.value;
+        //alert(quantity);//디버깅용
+        let total = quantity * ${book.price};
+        //alert(total); // 총액디버깅
+        document.getElementById("totalPrice").innerText=total; //천단위 콤마?
+     });
+
+     document.getElementById("addToCart").addEventListener("click",function(){
+     //책번호(${book.num}) , 수량(아이디 접근) , 고객아이디(세션${cus.customer_id})
+        let book_num = ${book.num};
+        let quantity = document.getElementById("quantityInput").value; //이아이디에 해당하는 벨류값을 가져옴
+        let customer_id = "${cus.customer_id}"; //이 값은 스트링 값이기 때문에 따움표로 붙혀야 한다.
+
+        //json 문자열 전달...
+        let data = {
+            "book_num" : book_num,
+            "quantity" : parseInt(quantity), //숫자니까 인트형으로 바꿔주기 확인하고 데이터가 숫자면 숫자로 파싱
+            "customer_id" : customer_id
+        };//Object
+        //console.log(data);//디버깅용
+        let jsonData = JSON.stringify(data) //json 문자열로 변경
+        console.log(jsonData);
+        //fetch().then().catch();
+
+        fetch("${cpath}/addToCart.do",{
+            method : "POST",
+            headers : {"Content-Type":"application/json"},
+            body : jsonData
+         })
+         .then(response=>response.json())
+         .then(data=>{
+            if(data.success){
+                    alert("장바구니담기 성공");
+                    // 리스트페이지로 가도되고 , 자신의 장바구니 보기페이지로 이동해도되고
+                    location.href="${cpath}/cartList.do";
+            }else{
+                    alert("장바구니담기 실패");
+                }
+         }) //json데이터를 받아 어떻게 처리할지
+         .catch(error=>{
+                console.log("Error"+error);
+            });
+     });
+
+
+
+   </script>
+</body>
+</html>
