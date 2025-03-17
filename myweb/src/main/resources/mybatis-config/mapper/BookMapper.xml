@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--인터페이스 와 매핑을 시켜줘야 해당 값으로 쿼리 작성 가능-->
+<mapper namespace="com.example.repository.BookMapper">
+    <select id="bookList" resultType="com.example.entity.Book">
+        select * from book order by num desc
+    </select>
+
+    <insert id="saveBook" parameterType="com.example.entity.Book">
+        insert into book(title,price,author,page)
+        values(#{title},#{price},#{author},500)
+    </insert>
+
+</mapper>
