@@ -8,7 +8,7 @@ import org.springframework.web.servlet.function.ServerRequest;
 
 @RestController
 public class BookSearchController {
-    private final String apikey="내 API키 "; //책검색 apikey
+    private final String apikey="1a4a29af7ad0c363148cc2a9190781cd"; //책검색 apikey
 
     @GetMapping("/search/books")//Get방식맵핑    title="인공지능"
     public ResponseEntity<String> searchBooks(String title){
