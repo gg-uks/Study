@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.repository.TemplateMapper">
+    <select id="products" resultType="com.example.entity.Product">
+        select * from product
+    </select>
+
+    <insert id="register" parameterType="com.example.entity.Product">
+         insert into product(product_name, inventory,price,manufacturer)
+        values(#{product_name}, #{inventory}, #{price} , #{manufacturer})
+    </insert>
+
+    <delete id="deleteById">
+        delete from product where product_number=#{product_number}
+    </delete>
+
+    <select id="getById" resultType="com.example.entity.Product">
+         select * from product where product_number=#{product_number}
+    </select>
+
+    <update id="update" parameterType="com.example.entity.Product">
+        update product  set
+        product_name=#{product.product_name},
+        inventory=#{product.inventory},
+        price=#{product.price}
+        where product_number=#{product_number}
+    </update>
+    <select id="search" resultType="com.example.entity.Product">
+        select * from product
+        where product_name like concat('%',#{keyword},'%')
+    </select>
+    
+    <update id="updateinventory">
+        update product
+        set inventory =#{inventory}
+        where product_number=#{productNumber}
+    </update>
+
+
+    <!--  페이징처리에서 추가된 부분  -->
+    <select id="totalCount" resultType="int">
+        select count(*) from product
+    </select>
+
+    <select id="getPagingList" parameterType="com.example.entity.Criteria"
+                                resultType="com.example.entity.Product">
+        select * from product
+        limit #{pageStart},#{size}
+    </select>
+</mapper>
