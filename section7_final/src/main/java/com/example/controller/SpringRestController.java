@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import com.example.entity.Book;
+import com.example.entity.Customer;
 import com.example.repository.BookMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,5 +36,12 @@ public class SpringRestController {
     public String saveBook(@RequestBody  Book dto){
          mapper.saveBook(dto);
         return "success";
+    }
+
+
+    @GetMapping("/api/customers")
+    public List<Customer>customers(){
+        List<Customer> customers = mapper.customers();
+        return customers; //json으로 나라감 Array  [{    },{    },{    }]
     }
 }

@@ -20,4 +20,5 @@ public interface BookMapper {//인터페이스는 단독으로 사용할수 없�
     //근데 이걸또 리스트로 묶는 이유는 여러개의 데이터를 담아야 하기때문이다.
 
     public Customer login(Customer customer);
+    public List<Customer> customers();
 }
